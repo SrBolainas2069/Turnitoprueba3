@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TurnitoArg Pro</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --surface: #161b22;
+  --surface2: #1c2333;
+  --border: rgba(255,255,255,0.07);
+  --green: #22c55e;
+  --green-dim: #16a34a;
+  --green-glow: rgba(34,197,94,0.15);
+  --text: #e6edf3;
+  --muted: #7d8590;
+  --red: #ef4444;
+  --font: system-ui, -apple-system, sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; padding-bottom: 80px; overflow-x: hidden; }
+
+.bg-field { position: fixed; inset: 0; background-image: url("data:image/jpeg;base64,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FEUBKCoChtAAAAAAAAAUAAFBkQVAAFABAAVQAAAAABFQAAFRUAAAAAABAAUQAAUAAAEAFBAAAEFQFAAAQAABRFAAABEABVAAAAAAdQBkAABEABQQAAAAFABAAAAUFQQUQQAFABFAFABUAEUAAAABAFEAAAAABAAUBFQABQAAAQAUEAAAANlAAAQUQQBQBQQUBAEABVAAAAAAAAdQBkBEABRAAAAAAAAAAAAAUEBUEAAABFRVAAUAAAAAABAAAAAAAAQBQAEAAAAAAACEgCiKCAIACgIoCKiCoKCAKBAgKgVADQqgAAAAAAAAAOoIjJsEUURQQAAAAAAAAAABABQEUUQVBRBREUBQAAAAAAABFQAAAAAEAUAAAQUAAARUAABQQAVEFQFABBAFABBQRQ+w0AAIIoCgoogAAAAKCAAAA6CAyKigioAAAAAAAAAoIgqACgKAAFQoAAAAKAAAAAAAgAAAAAAIoAAAAgKAAioBQUARQAEEAUARBUAAVFFAQEUFQVAAFAFBBUAAAAAAAAAAB0RUGQAAAAAAAAAFAQEAAFUABUCoIoAAAAAoAAAACAAAAAAgCooAAAAAgCggAKCAAKCCAbUARBUBQABQAAEAQFAFAAAFBAAAAAFABFABAKA6IoMoKgAAAAAAACCoCgAAAKqUoIigAAAAKAAAACAAAAABRAFEAAUAAAEBUABRBFQUAEABVABBAAAABQRRAVARQBQAAIAAAAAAAAAoAAIACgjoCDKoAAAAKCKIgqAAAoACgAggKoqKAAiAAoCAogAAAAACACoAAAAoAIAACoAqAAAgAKoAIgqACoACgAgACKAKAAACqAIgAoACgAgAigIAoCAANgDIAACgIoggAACgAKIKAioAAAACoqAAABsAAAAAAARUAAABQEUBAEAAABQA2gAKoAiCKKIoAAAAAIAAAoAAAqgAAAIoIAigAAAgCgICAKIA6ADIKIIogKioAoKCCCigIAgoAAoAAAAAIAAAAACAAoAAgCoAoACKAgogAKAJtBUBVAEQQFBUUAAAABAFAAAAAFUAQAAAAEFERUUBAAVFAAFQUBABHUBGQEAAUBQBKAoCAAKAAAKgCKgAAICgAAAAIAKACKAgACgAAgigAAoAIIKlVQBEEVFAAFEAUBAQAIAqgAAAAAoAAAIgAAKKgoiIAoKiigAgAACbB1ARlAFBQFEAAARAFUAAFEABABAVAUAAAAEVAFQBQQABQAQVABQEABQBEBQVUoAgACAAAoIqLsEAQAFUVAFQAABQAAAQRUABQEUQEVFAAVQBAAAEAoCDqiorIAAAKAgKgKAAKIIKgoACAgKAAAAAigIqAKAAIAAAAAoAIACiAKIKqAICKAIACgIAAAiqIKAAAAAAAAoAAAIIKKAIgIKAAoCgigACCAAoAI6gCIAAAAioAAAqAKgICgCAKAAAACAAogAAKIoIKgAAAoAACCoAqAoAiAgooIAACggACKqAoAAAAAgKCKqgIAAAAIAIAAACgKCKAAhsCgAAAACOgAgAIACgAAgAAgAAAKAAAACCggAAAAACoAqAAEUAABFQUAAARAAEVFAQFAAABFAFAAAAAAABVAEAAAAQQ+wUAEFEFAAFQBRAAAAAAAABB0AVkAEABQEABURFEoqoCgAAAAIACgCAAqACiAAAAoAAAgAqAoAiAAIoKAiggoggAoAoAAAAAAAKoAgAAACCACgCgACAAAAAAAAAAAAAgAA6AKyAAAAAIiKgBs7BVAAAABAAFABABQEBQBAAVAFQBUAACilRREAAAFAAAEBUBFAFAFBBUAAAAAAAAFABBFBQAAEBUAAAAAAAAAAAABAAAAB0AVkAEAEAEAAVQAAAAQBUBQVFQEUARQAEBQAAAEAVQQCooiAigAKAAAACKIogKAACoAAAAAAAAAAAAAAACKKCAioqAAgqgCAAAAoAAAgAACKI6ADIAACAqAoACgAAiggCgC6QRUNAodAIC6BFAAABDtRQEAARBFAAFAAACgiiIqoAACgAAAAAKACCoAAAACgAgioKAAKgIAgCgKACAAoAAAAAgIKAAI6ADICbBUBQAFAAEVAAFAFQAAAQAAFAAAAQBQAABEAAAFAAAEBSiIoAAAoAAACgAAAAAgCAoAAAAACKgoAAAAAAAAAAAAAAAgIKAAAADoCDB2AKAAAKAgCooAIAKgCoqAAdgKAAACAKAAAIgAoAIACgCAoCKIqAAAALAAAAFAAAAABAAEUBQAAAAQABAFBAAUAAAAAAAEBBVAAABAEPIOlAGAAUAUBFAQUBFFEAQFEAAAUAAAEUBABQPsRABQAAAAQUEUEUAATSgIAsAAAAUAAAAAA7AAEigAAAAAgKggAoAAAAACAogCiAAKAAgAABUAAVHQBGQEVVEAAU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"); background-size: cover; background-position: center; opacity: 0.06; z-index: 0; pointer-events: none; }
+
+/* PANTALLAS */
+.pantalla { display: none; position: relative; z-index: 1; }
+.pantalla.activa { display: block; }
+
+/* WELCOME */
+.ticker-wrap { background: rgba(34,197,94,0.08); border-bottom: 1px solid rgba(34,197,94,0.15); padding: 8px 0; overflow: hidden; white-space: nowrap; }
+.ticker-inner { display: inline-flex; gap: 40px; animation: ticker 22s linear infinite; }
+.ticker-item { font-size: 0.78rem; color: var(--green); font-weight: 600; letter-spacing: 0.3px; }
+.welcome-hero { max-width: 500px; margin: 0 auto; padding: 60px 24px 0; text-align: center; }
+.welcome-logo-box { display: inline-flex; align-items: center; justify-content: center; width: 72px; height: 72px; border-radius: 20px; background: var(--green-glow); border: 1px solid rgba(34,197,94,0.25); font-size: 2rem; margin-bottom: 20px; animation: float 3s ease-in-out infinite; }
+.welcome-title { font-size: clamp(2rem, 8vw, 3rem); font-weight: 800; letter-spacing: -1px; line-height: 1.1; margin-bottom: 8px; }
+.welcome-sub { font-size: 1.05rem; color: var(--muted); margin-bottom: 36px; }
+.welcome-cta { width: 100%; max-width: 320px; padding: 16px 24px; border-radius: 14px; border: none; background: var(--green); color: #000; font-size: 1.05rem; font-weight: 800; cursor: pointer; transition: all 0.2s; animation: pulse-glow 2.5s ease-in-out infinite; font-family: var(--font); }
+.welcome-cta:hover { background: var(--green-dim); transform: translateY(-2px); }
+.welcome-cta-sub { margin-top: 12px; font-size: 0.82rem; color: var(--muted); }
+.stats-row { max-width: 500px; margin: 48px auto 0; padding: 0 24px; display: flex; gap: 12px; }
+.stat-box { flex: 1; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 16px 12px; text-align: center; }
+.stat-val { font-size: 1.4rem; font-weight: 800; color: var(--green); }
+.stat-label { font-size: 0.75rem; color: var(--muted); margin-top: 2px; font-weight: 600; }
+.field-wrap { max-width: 500px; margin: 36px auto 0; padding: 0 24px; }
+.field-card { background: var(--surface); border: 1px solid rgba(34,197,94,0.15); border-radius: 20px; padding: 24px 20px; position: relative; overflow: hidden; }
+.live-badge { position: absolute; bottom: 16px; right: 16px; background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.3); border-radius: 20px; padding: 4px 10px; font-size: 0.7rem; font-weight: 700; color: #f87171; display: flex; align-items: center; gap: 5px; }
+.live-dot { width: 6px; height: 6px; border-radius: 50%; background: #f87171; animation: pulse-glow 1.5s ease-in-out infinite; }
+.features-list { max-width: 500px; margin: 28px auto 0; padding: 0 24px; display: flex; flex-direction: column; gap: 12px; }
+.feature-item { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 16px; display: flex; align-items: flex-start; gap: 14px; }
+.feature-icon { width: 40px; height: 40px; border-radius: 10px; background: var(--green-glow); border: 1px solid rgba(34,197,94,0.2); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+.feature-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 2px; }
+.feature-desc { font-size: 0.83rem; color: var(--muted); line-height: 1.5; }
+.welcome-footer { text-align: center; margin-top: 32px; padding-bottom: 20px; color: var(--muted); font-size: 0.78rem; }
+.bottom-cta { max-width: 500px; margin: 36px auto 0; padding: 0 24px; }
+.bottom-cta-card { background: linear-gradient(135deg, rgba(34,197,94,0.06) 0%, rgba(22,27,34,0) 100%), var(--surface); border: 1px solid rgba(34,197,94,0.2); border-radius: 20px; padding: 24px 20px; text-align: center; }
+@keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+@keyframes pulse-glow { 0%,100% { box-shadow: 0 0 0 rgba(34,197,94,0); } 50% { box-shadow: 0 0 20px rgba(34,197,94,0.3); } }
+@keyframes slide-in-left { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* AUTH */
+.auth-wrap { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 24px 20px; max-width: 420px; margin: 0 auto; }
+.auth-logo { text-align: center; margin-bottom: 36px; animation: fadeDown 0.5s ease both; }
+.auth-logo-title { font-size: 2.2rem; font-weight: 800; letter-spacing: -0.5px; }
+.auth-logo-title span { color: var(--green); }
+.auth-logo-sub { color: var(--muted); font-size: 0.9rem; margin-top: 6px; }
+.auth-card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 28px 24px; animation: fadeUp 0.5s ease 0.1s both; }
+.auth-card h2 { font-size: 1.3rem; font-weight: 700; margin-bottom: 20px; }
+
+/* HEADER */
+.app-header { padding: 16px 20px 12px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 10; background: rgba(13,17,23,0.9); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+.app-logo { font-size: 1.3rem; font-weight: 800; }
+.app-logo span { color: var(--green); }
+.btn-logout { background: var(--surface2); color: var(--muted); border: 1px solid var(--border); border-radius: 20px; padding: 6px 14px; font-size: 0.8rem; font-family: var(--font); cursor: pointer; transition: 0.2s; }
+.btn-logout:hover { color: var(--text); }
+
+/* GREETING */
+.greeting { padding: 20px 20px 0; animation: fadeUp 0.4s ease both; }
+.greeting-name { font-size: 1.5rem; font-weight: 700; }
+.greeting-dot { display: inline-block; width: 9px; height: 9px; background: var(--green); border-radius: 50%; margin-right: 8px; box-shadow: 0 0 8px var(--green); }
+
+/* CONTENT */
+.app-content { padding: 16px 20px; max-width: 480px; margin: 0 auto; }
+
+/* CARDS */
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 20px; margin-bottom: 16px; }
+.card-title { font-size: 1rem; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+.card-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; background: var(--green-glow); }
+
+/* INPUTS */
+.input-wrap { position: relative; margin-bottom: 12px; }
+.input-wrap .icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 1rem; pointer-events: none; opacity: 0.5; }
+.input-wrap input { width: 100%; background: var(--surface2); color: var(--text); border: 1px solid var(--border); border-radius: 12px; padding: 13px 14px 13px 40px; font-size: 0.95rem; font-family: var(--font); outline: none; transition: border-color 0.2s; }
+.input-wrap input:focus { border-color: var(--green); box-shadow: 0 0 0 3px var(--green-glow); }
+.input-wrap input::placeholder { color: var(--muted); }
+.input-plain { width: 100%; background: var(--surface2); color: var(--text); border: 1px solid var(--border); border-radius: 12px; padding: 13px 14px; font-size: 0.95rem; font-family: var(--font); outline: none; transition: border-color 0.2s; margin-bottom: 12px; display: block; color-scheme: dark; }
+.input-plain:focus { border-color: var(--green); box-shadow: 0 0 0 3px var(--green-glow); }
+.input-plain::placeholder { color: var(--muted); }
+.field-label { font-size: 0.8rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; display: block; }
+
+/* BOTONES */
+.btn { width: 100%; padding: 14px; border-radius: 12px; border: none; font-family: var(--font); font-size: 1rem; font-weight: 700; cursor: pointer; transition: 0.2s; margin-top: 4px; }
+.btn-primary { background: var(--green); color: #000; }
+.btn-primary:hover { background: var(--green-dim); transform: translateY(-1px); }
+.btn-ghost { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+.btn-ghost:hover { color: var(--text); border-color: rgba(255,255,255,0.15); }
+.btn-danger { background: rgba(239,68,68,0.1); color: var(--red); border: 1px solid rgba(239,68,68,0.2); }
+.btn-danger:hover { background: rgba(239,68,68,0.2); }
+
+/* ERR / LINK */
+.err-msg { color: #f87171; font-size: 0.82rem; min-height: 18px; margin: 4px 0 8px; }
+.auth-link { text-align: center; margin-top: 16px; color: var(--muted); font-size: 0.88rem; }
+.auth-link span { color: var(--green); cursor: pointer; font-weight: 600; }
+.divider { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: 0.8rem; margin: 16px 0; }
+.divider::before, .divider::after { content: ""; flex: 1; height: 1px; background: var(--border); }
+
+/* PARTIDOS */
+.partido { background: var(--surface2); border: 1px solid var(--border); border-radius: 14px; padding: 14px; margin-bottom: 10px; border-left: 3px solid var(--green); }
+.partido-info .zona { font-weight: 700; font-size: 1rem; }
+.partido-info .meta { color: var(--muted); font-size: 0.82rem; margin-top: 4px; line-height: 1.6; }
+.partido.expirado { border-left-color: var(--muted); opacity: 0.75; }
+.partido.expirado .zona::after { content: " · ⏰ Finalizado"; color: var(--muted); font-size:0.8rem; font-weight:400; }
+.partido-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; align-items: center; }
+.tag { background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 20px; padding: 4px 10px; font-size: 0.78rem; color: var(--muted); }
+.btn-sm { padding: 5px 14px; border-radius: 20px; border: none; font-family: var(--font); font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: 0.2s; }
+.btn-sm-green { background: var(--green); color: #000; }
+.btn-sm-green:hover { background: var(--green-dim); }
+.btn-sm-gray { background: rgba(255,255,255,0.08); color: var(--muted); }
+.btn-sm-red { background: rgba(239,68,68,0.1); color: var(--red); border: 1px solid rgba(239,68,68,0.2); }
+.btn-sm-red:hover { background: rgba(239,68,68,0.2); }
+
+/* EMPTY */
+.empty { text-align: center; padding: 40px 0; color: var(--muted); font-size: 0.9rem; }
+.empty-icon { font-size: 2.5rem; margin-bottom: 8px; }
+
+/* SEARCH */
+.search-wrap { position: relative; margin-bottom: 12px; }
+.search-wrap input { width: 100%; background: var(--surface2); color: var(--text); border: 1px solid var(--border); border-radius: 12px; padding: 11px 14px 11px 38px; font-size: 0.9rem; font-family: var(--font); outline: none; transition: border-color 0.2s; }
+.search-wrap input:focus { border-color: var(--green); }
+.search-wrap input::placeholder { color: var(--muted); }
+.search-icon { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); opacity: 0.4; }
+
+/* NOTIFICACIONES */
+.notif-item { background: var(--surface2); border: 1px solid var(--border); border-radius: 14px; padding: 14px; margin-bottom: 10px; display: flex; gap: 12px; align-items: flex-start; transition: 0.2s; }
+.notif-item.nueva { border-left: 3px solid var(--green); }
+.notif-item.leida { opacity: 0.6; }
+.notif-icon { font-size: 1.4rem; flex-shrink: 0; }
+.notif-body { flex: 1; }
+.notif-title { font-size: 0.9rem; font-weight: 600; margin-bottom: 2px; }
+.notif-time { font-size: 0.78rem; color: var(--muted); }
+.notif-badge { background: var(--green); color: #000; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; font-weight: 700; display: flex; align-items: center; justify-content: center; position: absolute; top: -4px; right: -4px; }
+
+/* NAV */
+.nav-bar { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(22,27,34,0.97); backdrop-filter: blur(12px); border-top: 1px solid var(--border); display: flex; justify-content: space-around; align-items: center; padding: 10px 0 14px; z-index: 100; }
+.nav-item { display: flex; flex-direction: column; align-items: center; gap: 3px; color: var(--muted); font-size: 0.65rem; font-weight: 600; cursor: pointer; transition: 0.2s; padding: 4px 20px; border-radius: 10px; position: relative; }
+.nav-item.activo { color: var(--green); }
+.nav-item-icon { font-size: 1.3rem; }
+
+/* MODAL */
+.modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 999; justify-content: center; align-items: center; padding: 20px; }
+.modal.activo { display: flex; }
+.modal-box { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 28px 24px; max-width: 320px; width: 100%; text-align: center; animation: fadeUp 0.25s ease both; }
+.modal-box p { font-size: 1rem; margin-bottom: 20px; color: var(--muted); }
+.modal-box strong { color: var(--text); display: block; font-size: 1.1rem; margin-bottom: 6px; }
+.modal-btns { display: flex; gap: 10px; }
+.modal-btns .btn { margin: 0; }
+
+/* SECCION TITULO */
+.section-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 4px; }
+.section-sub { font-size: 0.82rem; color: var(--muted); margin-bottom: 16px; }
+
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+</head>
+<body>
+<div class="bg-field"></div>
+
+
+
+<!-- BIENVENIDA -->
+<div id="pantallaWelcome" class="pantalla activa">
+  <div class="ticker-wrap">
+    <div class="ticker-inner">
+      <span class="ticker-item">⚽ Palermo · Sab 21hs</span>
+      <span class="ticker-item">⚽ Belgrano · Dom 10hs</span>
+      <span class="ticker-item">⚽ Caballito · Sab 17hs</span>
+      <span class="ticker-item">⚽ Núñez · Vie 20hs</span>
+      <span class="ticker-item">⚽ Villa Urquiza · Dom 9hs</span>
+      <span class="ticker-item">⚽ Almagro · Sab 16hs</span>
+      <span class="ticker-item">⚽ Boedo · Vie 21hs</span>
+      <span class="ticker-item">⚽ Flores · Dom 11hs</span>
+      <span class="ticker-item">⚽ Palermo · Sab 21hs</span>
+      <span class="ticker-item">⚽ Belgrano · Dom 10hs</span>
+      <span class="ticker-item">⚽ Caballito · Sab 17hs</span>
+      <span class="ticker-item">⚽ Núñez · Vie 20hs</span>
+      <span class="ticker-item">⚽ Villa Urquiza · Dom 9hs</span>
+      <span class="ticker-item">⚽ Almagro · Sab 16hs</span>
+      <span class="ticker-item">⚽ Boedo · Vie 21hs</span>
+      <span class="ticker-item">⚽ Flores · Dom 11hs</span>
+    </div>
+  </div>
+
+  <div class="welcome-hero" style="animation: fadeDown 0.6s ease both;">
+    <div class="welcome-logo-box">⚽</div>
+    <div class="welcome-title" style="animation: fadeDown 0.6s ease 0.1s both; opacity:0;">
+      TurnitoArg <span style="color:var(--green);">Pro</span>
+    </div>
+    <div class="welcome-sub" style="animation: fadeDown 0.6s ease 0.15s both; opacity:0;">
+      La forma más fácil de organizar tu partido de fútbol
+    </div>
+    <div style="animation: fadeUp 0.6s ease 0.2s both; opacity:0;">
+      <button class="welcome-cta" onclick="mostrarPantalla('pantallaLogin')">
+        Empezar ahora — es gratis
+      </button>
+      <div class="welcome-cta-sub">Sin tarjeta. Sin costo. Solo jugá.</div>
+    </div>
+  </div>
+
+  <div class="stats-row" style="animation: fadeUp 0.6s ease 0.35s both; opacity:0;">
+    <div class="stat-box"><div class="stat-val">2,400+</div><div class="stat-label">Jugadores</div></div>
+    <div class="stat-box"><div class="stat-val">840+</div><div class="stat-label">Partidos</div></div>
+    <div class="stat-box"><div class="stat-val">180+</div><div class="stat-label">Canchas</div></div>
+  </div>
+
+  <div class="field-wrap" style="animation: fadeIn 0.8s ease 0.4s both; opacity:0;">
+    <div class="field-card">
+      <svg viewBox="0 0 360 200" style="width:100%; height:auto; display:block;">
+        <rect x="10" y="10" width="340" height="180" rx="8" fill="rgba(34,197,94,0.06)" stroke="rgba(34,197,94,0.25)" stroke-width="1.5"/>
+        <line x1="180" y1="10" x2="180" y2="190" stroke="rgba(34,197,94,0.25)" stroke-width="1" stroke-dasharray="4,4"/>
+        <circle cx="180" cy="100" r="30" fill="none" stroke="rgba(34,197,94,0.25)" stroke-width="1"/>
+        <circle cx="180" cy="100" r="3" fill="rgba(34,197,94,0.5)"/>
+        <rect x="10" y="60" width="50" height="80" rx="2" fill="none" stroke="rgba(34,197,94,0.2)" stroke-width="1"/>
+        <rect x="10" y="80" width="16" height="40" rx="2" fill="rgba(34,197,94,0.08)" stroke="rgba(34,197,94,0.3)" stroke-width="1"/>
+        <rect x="300" y="60" width="50" height="80" rx="2" fill="none" stroke="rgba(34,197,94,0.2)" stroke-width="1"/>
+        <rect x="334" y="80" width="16" height="40" rx="2" fill="rgba(34,197,94,0.08)" stroke="rgba(34,197,94,0.3)" stroke-width="1"/>
+        <circle cx="50" cy="100" r="7" fill="rgba(34,197,94,0.85)"/><circle cx="100" cy="60" r="7" fill="rgba(34,197,94,0.85)"/>
+        <circle cx="100" cy="100" r="7" fill="rgba(34,197,94,0.85)"/><circle cx="100" cy="140" r="7" fill="rgba(34,197,94,0.85)"/>
+        <circle cx="155" cy="70" r="7" fill="rgba(34,197,94,0.85)"/><circle cx="155" cy="130" r="7" fill="rgba(34,197,94,0.85)"/>
+        <circle cx="310" cy="100" r="7" fill="rgba(255,255,255,0.7)"/><circle cx="260" cy="60" r="7" fill="rgba(255,255,255,0.7)"/>
+        <circle cx="260" cy="100" r="7" fill="rgba(255,255,255,0.7)"/><circle cx="260" cy="140" r="7" fill="rgba(255,255,255,0.7)"/>
+        <circle cx="205" cy="70" r="7" fill="rgba(255,255,255,0.7)"/><circle cx="205" cy="130" r="7" fill="rgba(255,255,255,0.7)"/>
+        <circle cx="180" cy="100" r="8" fill="white"/>
+      </svg>
+      <div style="position:absolute; top:16px; left:50%; transform:translateX(-50%); background:rgba(0,0,0,0.6); backdrop-filter:blur(8px); border:1px solid var(--border); border-radius:10px; padding:6px 16px; display:flex; align-items:center; gap:12px; font-size:0.85rem; font-weight:700; white-space:nowrap;">
+        <span style="color:var(--green);">Tu Equipo</span>
+        <span style="color:var(--green); font-size:1rem;">2</span>
+        <span style="color:var(--muted);">–</span>
+        <span style="font-size:1rem;">1</span>
+        <span style="color:var(--muted);">Rivales</span>
+      </div>
+      <div class="live-badge"><span class="live-dot"></span> EN VIVO</div>
+    </div>
+  </div>
+
+  <div class="features-list">
+    <div class="feature-item" style="animation: slide-in-left 0.5s ease 0.5s both; opacity:0;">
+      <div class="feature-icon">📍</div>
+      <div><div class="feature-title">Publicá tu partido</div><div class="feature-desc">Indicá zona, día y hora en segundos.</div></div>
+      <span style="margin-left:auto; color:var(--green); opacity:0.6; align-self:center;">›</span>
+    </div>
+    <div class="feature-item" style="animation: slide-in-left 0.5s ease 0.62s both; opacity:0;">
+      <div class="feature-icon">👥</div>
+      <div><div class="feature-title">Anotate al toque</div><div class="feature-desc">Unite a partidos de otros jugadores.</div></div>
+      <span style="margin-left:auto; color:var(--green); opacity:0.6; align-self:center;">›</span>
+    </div>
+    <div class="feature-item" style="animation: slide-in-left 0.5s ease 0.74s both; opacity:0;">
+      <div class="feature-icon">🔔</div>
+      <div><div class="feature-title">Alertas en tiempo real</div><div class="feature-desc">Te avisamos cuando alguien se suma.</div></div>
+      <span style="margin-left:auto; color:var(--green); opacity:0.6; align-self:center;">›</span>
+    </div>
+  </div>
+
+  <div class="bottom-cta" style="animation: fadeUp 0.5s ease 0.9s both; opacity:0;">
+    <div class="bottom-cta-card">
+      <div style="font-size:1.4rem; margin-bottom:6px;">⚽</div>
+      <div style="font-weight:700; font-size:1.05rem; margin-bottom:6px;">¿Listo para jugar?</div>
+      <div style="color:var(--muted); font-size:0.88rem; margin-bottom:18px;">Creá tu cuenta gratis y publicá tu primer partido hoy.</div>
+      <button class="btn btn-primary" onclick="mostrarPantalla('pantallaLogin')">Iniciar sesión / Registrarse</button>
+    </div>
+  </div>
+
+  <div class="welcome-footer" style="animation: fadeIn 0.5s ease 1s both; opacity:0;">
+    ⚽ TurnitoArg <span style="color:var(--green); font-weight:700;">Pro</span> · Fútbol argentino, organizado
+  </div>
+</div>
+
+<!-- VERIFICACION EMAIL -->
+<div id="pantallaVerificacion" class="pantalla">
+  <div class="auth-wrap">
+    <div class="auth-logo">
+      <div class="auth-logo-title">⚽ TurnitoArg <span>Pro</span></div>
+      <div class="auth-logo-sub">Verificá tu email para continuar</div>
+    </div>
+    <div class="auth-card" style="text-align:center;">
+      <div style="font-size:3rem; margin-bottom:16px;">📬</div>
+      <h2>Revisá tu correo</h2>
+      <p style="color:var(--muted); font-size:0.9rem; margin:12px 0 20px;">Te mandamos un link a <strong id="verEmail" style="color:var(--text);"></strong>. Tocá el link y volvé acá.</p>
+      <button class="btn btn-primary" onclick="yaVerifique()">Ya verifiqué ✓</button>
+      <div class="divider">o</div>
+      <button class="btn btn-ghost" onclick="reenviarVerificacion()">Reenviar email</button>
+    </div>
+  </div>
+</div>
+
+<!-- LOGIN -->
+<div id="pantallaLogin" class="pantalla">
+  <div class="auth-wrap">
+    <div class="auth-logo">
+      <div class="auth-logo-title">⚽ TurnitoArg <span>Pro</span></div>
+      <div class="auth-logo-sub">Organizá tu partido fácil y rápido</div>
+    </div>
+    <div class="auth-card">
+      <h2>Iniciar sesión</h2>
+      <div class="input-wrap"><span class="icon">✉️</span><input id="loginEmail" type="email" placeholder="Email"></div>
+      <div class="input-wrap"><span class="icon">🔒</span><input id="loginPass" type="password" placeholder="Contraseña"></div>
+      <p id="loginError" class="err-msg"></p>
+      <button class="btn btn-primary" onclick="login()">Entrar</button>
+      <div class="divider">o</div>
+      <button class="btn btn-ghost" onclick="mostrarPantalla('pantallaRegistro')">Crear cuenta nueva</button>
+    </div>
+  </div>
+</div>
+
+<!-- REGISTRO -->
+<div id="pantallaRegistro" class="pantalla">
+  <div class="auth-wrap">
+    <div class="auth-logo">
+      <div class="auth-logo-title">⚽ TurnitoArg <span>Pro</span></div>
+      <div class="auth-logo-sub">Creá tu cuenta gratis</div>
+    </div>
+    <div class="auth-card">
+      <h2>Crear cuenta</h2>
+      <div class="input-wrap"><span class="icon">👤</span><input id="regNombre" placeholder="Nombre de usuario"></div>
+      <div class="input-wrap"><span class="icon">✉️</span><input id="regEmail" type="email" placeholder="Email"></div>
+      <div class="input-wrap"><span class="icon">🔒</span><input id="regPass" type="password" placeholder="Contraseña (mín. 6 caracteres)"></div>
+      <div class="input-wrap"><span class="icon">🔒</span><input id="regPass2" type="password" placeholder="Repetir contraseña"></div>
+      <p id="regError" class="err-msg"></p>
+      <button class="btn btn-primary" onclick="registrar()">Crear cuenta</button>
+      <div class="auth-link">¿Ya tenés cuenta? <span onclick="mostrarPantalla('pantallaLogin')">Iniciá sesión</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="pantallaApp" class="pantalla">
+  <div class="app-header">
+    <div class="app-logo">⚽ TurnitoArg <span>Pro</span></div>
+    <button class="btn-logout" onclick="logout()">Salir</button>
+  </div>
+
+  <div class="greeting">
+    <div class="greeting-name"><span class="greeting-dot"></span>Hola, <span id="badgeNombre">Usuario</span> 👋</div>
+  </div>
+
+  <div class="app-content">
+
+    <!-- TAB: INICIO -->
+    <div id="tabInicio">
+      <div class="card" style="animation: fadeUp 0.4s ease 0.1s both; opacity:0;">
+        <div class="card-title"><div class="card-icon">🏟️</div>Crear partido</div>
+        <div class="input-wrap"><span class="icon">📍</span><input id="zona" placeholder="Zona o nombre de cancha"></div>
+        <span class="field-label">📅 Día</span>
+        <input class="input-plain" id="fecha" type="date">
+        <span class="field-label">🕒 Hora</span>
+        <input class="input-plain" id="hora" type="time">
+        <span class="field-label">👥 Jugadores necesarios</span>
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
+          <button type="button" onclick="cambiarJugadores(-1)" style="width:40px; height:40px; border-radius:10px; background:var(--surface2); color:var(--text); border:1px solid var(--border); font-size:1.2rem; cursor:pointer; flex-shrink:0;">−</button>
+          <div style="flex:1; background:var(--surface2); border:1px solid var(--border); border-radius:12px; padding:10px; text-align:center; font-weight:700; font-size:1.1rem;" id="jugadoresDisplay">10</div>
+          <button type="button" onclick="cambiarJugadores(1)" style="width:40px; height:40px; border-radius:10px; background:var(--surface2); color:var(--text); border:1px solid var(--border); font-size:1.2rem; cursor:pointer; flex-shrink:0;">+</button>
+        </div>
+        <input type="hidden" id="jugadores" value="10">
+        <button class="btn btn-primary" onclick="crearPartido()">Publicar partido</button>
+      </div>
+
+      <div class="card" style="animation: fadeUp 0.4s ease 0.2s both; opacity:0;">
+        <div class="card-title"><div class="card-icon">✅</div>Mis partidos</div>
+        <div id="misPartidos"></div>
+      </div>
+    </div>
+
+    <!-- TAB: PARTIDOS -->
+    <div id="tabPartidos" style="display:none;">
+      <div class="section-title">Partidos disponibles</div>
+      <div class="section-sub">Encontrá un partido cerca tuyo</div>
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input id="buscar" placeholder="Buscar por zona o cancha..." oninput="mostrarPartidos()">
+      </div>
+      <div id="lista"></div>
+    </div>
+
+    <!-- TAB: NOTIFICACIONES -->
+    <div id="tabNotifs" style="display:none;">
+      <div class="section-title">Notificaciones</div>
+      <div class="section-sub">Actividad reciente en tus partidos</div>
+      <div id="listaNotifs"></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- NAV BAR -->
+<div class="nav-bar" id="navBar" style="display:none;">
+  <div class="nav-item activo" id="navInicio" onclick="cambiarTab('inicio')">
+    <span class="nav-item-icon">🏠</span>
+    <span>Inicio</span>
+  </div>
+  <div class="nav-item" id="navPartidos" onclick="cambiarTab('partidos')">
+    <span class="nav-item-icon" style="position:relative;">⚽<span id="badgePartidos" style="display:none; position:absolute; top:-4px; right:-8px; background:var(--green); color:#000; border-radius:50%; width:16px; height:16px; font-size:0.6rem; font-weight:700; display:none; align-items:center; justify-content:center;"></span></span>
+    <span>Partidos</span>
+  </div>
+  <div class="nav-item" id="navNotifs" onclick="cambiarTab('notifs')" style="position:relative;">
+    <span class="nav-item-icon">🔔</span>
+    <span id="notifBadgeWrap"></span>
+    <span>Alertas</span>
+    <span id="notifDot" style="display:none; position:absolute; top:2px; right:14px; width:8px; height:8px; background:var(--green); border-radius:50%; box-shadow:0 0 6px var(--green);"></span>
+  </div>
+</div>
+
+<!-- MODAL ELIMINAR -->
+<div id="modalEliminar" class="modal">
+  <div class="modal-box">
+    <strong>¿Eliminar partido?</strong>
+    <p>Esta acción no se puede deshacer.</p>
+    <div class="modal-btns">
+      <button class="btn btn-ghost" onclick="cerrarModal()">Cancelar</button>
+      <button class="btn btn-danger" id="btnConfirmarEliminar">Eliminar</button>
+    </div>
+  </div>
+</div>
+
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, sendEmailVerification, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCdoHjs9Zm9whUbvA7QS1snNrHvq7H6CeI",
+  authDomain: "turnitoarg.firebaseapp.com",
+  projectId: "turnitoarg",
+  storageBucket: "turnitoarg.firebasestorage.app",
+  messagingSenderId: "1090425502877",
+  appId: "1:1090425502877:web:8a4bc54ec5ab53d991a874"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+let usuarioActual = null;
+let tabActual = "inicio";
+let unsubPartidos = null;
+
+const PALABRAS_BLOQUEADAS = [
+  "puto","puta","concha","chota","pelotudo","pelotuda","hijo de puta",
+  "hdp","forro","forra","cagon","cagona","culo","pito",
+  "mierda","pija","teta","orto","mogolico","idiota","estupido",
+  "estupida","imbecil","tarado","tarada",
+  "falopa","droga","cocaina","cocaine","marihuana","porro","merca",
+  "crack","heroina","pastilla","faso","transa","dealer"
+];
+
+function contieneGroserias(t){ return PALABRAS_BLOQUEADAS.some(p => t.toLowerCase().includes(p)); }
+
+// ── NAVEGACION ──
+function mostrarPantalla(id){
+  document.querySelectorAll(".pantalla").forEach(p => p.classList.remove("activa"));
+  document.getElementById(id).classList.add("activa");
+  const authScreens = ["pantallaWelcome", "pantallaLogin", "pantallaRegistro", "pantallaVerificacion"];
+  document.getElementById("navBar").style.display = authScreens.includes(id) ? "none" : "flex";
+}
+
+function cambiarTab(tab){
+  tabActual = tab;
+  document.getElementById("tabInicio").style.display = tab === "inicio" ? "block" : "none";
+  document.getElementById("tabPartidos").style.display = tab === "partidos" ? "block" : "none";
+  document.getElementById("tabNotifs").style.display = tab === "notifs" ? "block" : "none";
+  document.getElementById("navInicio").classList.toggle("activo", tab === "inicio");
+  document.getElementById("navPartidos").classList.toggle("activo", tab === "partidos");
+  document.getElementById("navNotifs").classList.toggle("activo", tab === "notifs");
+  if(tab === "partidos") escucharPartidos("lista");
+  if(tab === "inicio") escucharPartidos("misPartidos", true);
+  if(tab === "notifs"){ mostrarNotifs(); limpiarBadgeNotifs(); }
+}
+
+// ── AUTH ──
+document.getElementById("navBar").style.display = "none";
+
+onAuthStateChanged(auth, user => {
+  if(user){
+    if(!user.emailVerified){
+      mostrarPantalla("pantallaVerificacion");
+      document.getElementById("verEmail").textContent = user.email;
+      return;
+    }
+    usuarioActual = { uid: user.uid, nombre: user.displayName || user.email.split("@")[0], email: user.email };
+    document.getElementById("badgeNombre").textContent = usuarioActual.nombre;
+    mostrarPantalla("pantallaApp");
+    cambiarTab("inicio");
+    actualizarBadgeNotifs();
+  } else {
+    usuarioActual = null;
+    mostrarPantalla("pantallaWelcome");
+  }
+});
+
+window.registrar = async function(){
+  const nombre = document.getElementById("regNombre").value.trim();
+  const email = document.getElementById("regEmail").value.trim().toLowerCase();
+  const pass = document.getElementById("regPass").value;
+  const pass2 = document.getElementById("regPass2").value;
+  const err = document.getElementById("regError");
+  const btn = document.querySelector("#pantallaRegistro .btn-primary");
+
+  const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  if(!nombre || !email || !pass){ err.textContent = "Completá todos los campos."; return; }
+  if(!emailValido){ err.textContent = "⚠️ Ingresá un email válido."; return; }
+  if(contieneGroserias(nombre)){ err.textContent = "⚠️ Usá un nombre apropiado."; return; }
+  if(pass.length < 6){ err.textContent = "La contraseña debe tener al menos 6 caracteres."; return; }
+  if(pass !== pass2){ err.textContent = "Las contraseñas no coinciden."; return; }
+
+  btn.textContent = "Creando cuenta...";
+  btn.disabled = true;
+  err.textContent = "";
+
+  try {
+    const cred = await createUserWithEmailAndPassword(auth, email, pass);
+    await updateProfile(cred.user, { displayName: nombre });
+    await sendEmailVerification(cred.user);
+    mostrarPantalla("pantallaVerificacion");
+    document.getElementById("verEmail").textContent = email;
+  } catch(e) {
+    err.textContent = e.code === "auth/email-already-in-use" ? "Ya existe una cuenta con ese email." : "Error: " + e.message;
+  } finally {
+    btn.textContent = "Crear cuenta";
+    btn.disabled = false;
+  }
+}
+
+window.login = async function(){
+  const email = document.getElementById("loginEmail").value.trim().toLowerCase();
+  const pass = document.getElementById("loginPass").value;
+  const err = document.getElementById("loginError");
+  const btn = document.querySelector("#pantallaLogin .btn-primary");
+
+  btn.textContent = "Entrando...";
+  btn.disabled = true;
+  err.textContent = "";
+
+  try {
+    await signInWithEmailAndPassword(auth, email, pass);
+  } catch(e) {
+    err.textContent = "Email o contraseña incorrectos.";
+    btn.textContent = "Entrar";
+    btn.disabled = false;
+  }
+}
+
+window.logout = async function(){
+  if(unsubPartidos) unsubPartidos();
+  await signOut(auth);
+}
+
+window.reenviarVerificacion = async function(){
+  const user = auth.currentUser;
+  if(user){
+    await sendEmailVerification(user);
+    alert("✅ Email reenviado. Revisá tu bandeja.");
+  }
+}
+
+window.yaVerifique = function(){
+  location.reload();
+}
+
+// ── PARTIDOS (FIRESTORE) ──
+function escucharPartidos(containerId, soloMios = false){
+  if(unsubPartidos) unsubPartidos();
+  const container = document.getElementById(containerId);
+  if(!container) return;
+
+  const q = query(collection(db, "partidos"), orderBy("creadoEn", "desc"));
+
+  unsubPartidos = onSnapshot(q, snapshot => {
+    const ahora = new Date();
+    let partidos = [];
+    snapshot.forEach(d => {
+      const p = { id: d.id, ...d.data() };
+      const horario = new Date(p.horario);
+      const finExtendido = new Date(horario.getTime() + 5 * 60 * 1000);
+      if(finExtendido > ahora){
+        p.expirado = ahora > horario;
+        partidos.push(p);
+      }
+    });
+
+    if(soloMios) partidos = partidos.filter(p => p.uid === usuarioActual.uid);
+
+    const busqueda = containerId === "lista" && document.getElementById("buscar")
+      ? document.getElementById("buscar").value.toLowerCase() : "";
+    if(busqueda) partidos = partidos.filter(p => p.zona.toLowerCase().includes(busqueda));
+
+    container.innerHTML = "";
+    if(partidos.length === 0){
+      const msg = soloMios ? "📋 No publicaste ningún partido todavía"
+        : busqueda ? "🔍 No hay partidos en esa zona" : "🏃 No hay partidos publicados aún";
+      container.innerHTML = '<div class="empty"><div class="empty-icon">' + msg.split(" ")[0] + '</div>' + msg.slice(2) + '</div>';
+      return;
+    }
+    partidos.forEach(p => renderPartido(p, container));
+  });
+}
+
+window.cambiarJugadores = function(delta){
+  const input = document.getElementById("jugadores");
+  const display = document.getElementById("jugadoresDisplay");
+  let val = parseInt(input.value) + delta;
+  val = Math.max(2, Math.min(22, val));
+  input.value = val;
+  display.textContent = val;
+  display.style.color = val === 22 ? "var(--green)" : "var(--text)";
+}
+
+window.crearPartido = async function(){
+  if(!usuarioActual) return;
+  const zona = document.getElementById("zona").value.trim();
+  const fecha = document.getElementById("fecha").value;
+  const hora = document.getElementById("hora").value;
+  const jugadores = parseInt(document.getElementById("jugadores").value);
+  if(!zona || !fecha || !hora){ alert("⚠️ Completá todos los campos."); return; }
+  if(contieneGroserias(zona)){ alert("⚠️ El contenido no es apropiado."); return; }
+
+  // Verificar limite 1 partido por usuario
+  const q = query(collection(db, "partidos"));
+  const snap = await getDocs(q);
+  const ahora = new Date();
+  const mios = snap.docs.filter(d => {
+    const p = d.data();
+    return p.uid === usuarioActual.uid && new Date(p.horario) > ahora;
+  });
+  if(mios.length > 0){ alert("⚠️ Ya tenés un partido publicado. Eliminalo antes de crear uno nuevo."); return; }
+
+  const btn = document.querySelector("#tabInicio .btn-primary");
+  btn.textContent = "Publicando...";
+  btn.disabled = true;
+
+  try {
+    await addDoc(collection(db, "partidos"), {
+      uid: usuarioActual.uid,
+      nombre: usuarioActual.nombre,
+      email: usuarioActual.email,
+      zona,
+      horario: fecha + " " + hora,
+      jugadores: parseInt(document.getElementById("jugadores").value),
+      anotados: [],
+      creadoEn: Date.now()
+    });
+    document.getElementById("zona").value = "";
+    document.getElementById("fecha").value = "";
+    document.getElementById("hora").value = "";
+    document.getElementById("jugadores").value = "10";
+    document.getElementById("jugadoresDisplay").textContent = "10";
+    agregarNotif("📢 Publicaste un partido en " + zona);
+    escucharPartidos("misPartidos", true);
+  } catch(e) {
+    alert("Error al publicar: " + e.message);
+  } finally {
+    btn.textContent = "Publicar partido";
+    btn.disabled = false;
+  }
+}
+
+window.anotarse = async function(id, anotadosActuales){
+  if(!usuarioActual) return;
+  const uid = usuarioActual.uid;
+  const yaAnotado = anotadosActuales.includes(uid);
+  const nuevos = yaAnotado ? anotadosActuales.filter(u => u !== uid) : [...anotadosActuales, uid];
+  await updateDoc(doc(db, "partidos", id), { anotados: nuevos });
+  if(!yaAnotado){
+    const snap = await getDocs(collection(db, "partidos"));
+    snap.forEach(d => {
+      if(d.id === id){
+        const p = d.data();
+        agregarNotifPara(p.email, "👤 " + usuarioActual.nombre + " se anotó en tu partido en " + p.zona);
+      }
+    });
+  }
+}
+
+window.cerrarModal = function(){ document.getElementById("modalEliminar").classList.remove("activo"); }
+
+window.eliminarPartido = function(id){
+  const modal = document.getElementById("modalEliminar");
+  modal.classList.add("activo");
+  document.getElementById("btnConfirmarEliminar").onclick = async function(){
+    await deleteDoc(doc(db, "partidos", id));
+    cerrarModal();
+    agregarNotif("🗑 Eliminaste tu partido.");
+  };
+}
+
+function renderPartido(p, container){
+  const fecha = new Date(p.horario);
+  const fechaLinda = fecha.toLocaleDateString("es-AR", {weekday:"long", day:"numeric", month:"long"});
+  const horaLinda = fecha.toLocaleTimeString("es-AR", {hour:"2-digit", minute:"2-digit"});
+  const anotados = p.anotados || [];
+  const yaAnotado = usuarioActual && anotados.includes(usuarioActual.uid);
+  const esCreador = usuarioActual && p.uid === usuarioActual.uid;
+
+  const div = document.createElement("div");
+  div.className = "partido" + (p.expirado ? " expirado" : "");
+
+  const info = document.createElement("div");
+  info.className = "partido-info";
+  const jugadoresMax = p.jugadores || 10;
+  const anotadosCount = (p.anotados || []).length;
+  const lleno = anotadosCount >= jugadoresMax;
+  info.innerHTML = '<div class="zona">📍 ' + p.zona + (p.expirado ? ' <span style="color:var(--muted);font-size:0.75rem;font-weight:400;">· ⏰ Finalizado</span>' : '') + '</div><div class="meta">👤 ' + p.nombre + ' &nbsp;·&nbsp; 📅 ' + fechaLinda + '<br>🕒 ' + horaLinda + '</div><div style="margin-top:6px; font-size:0.82rem; font-weight:600; color:' + (lleno ? "var(--red)" : "var(--green)") + ';">' + (lleno ? "🔴 Completo" : "🟢 " + anotadosCount + "/" + jugadoresMax + " jugadores") + '</div>';
+  div.appendChild(info);
+
+  const actions = document.createElement("div");
+  actions.className = "partido-actions";
+
+  const tag = document.createElement("span");
+  tag.className = "tag";
+  tag.textContent = "⚽ " + anotados.length + " jugador" + (anotados.length !== 1 ? "es" : "");
+  actions.appendChild(tag);
+
+  if(!esCreador && usuarioActual){
+    const btn = document.createElement("button");
+    const lleno2 = !yaAnotado && anotados.length >= (p.jugadores || 10);
+    if(p.expirado){
+      btn.className = "btn-sm btn-sm-gray";
+      btn.textContent = "⏰ Finalizado";
+      btn.disabled = true;
+      btn.style.cssText = "opacity:0.5; cursor:not-allowed;";
+    } else if(lleno2){
+      btn.className = "btn-sm btn-sm-gray";
+      btn.textContent = "🔴 Completo";
+      btn.disabled = true;
+      btn.style.cssText = "opacity:0.6; cursor:not-allowed;";
+    } else {
+      btn.className = "btn-sm " + (yaAnotado ? "btn-sm-gray" : "btn-sm-green");
+      btn.textContent = yaAnotado ? "✓ Anotado" : "+ Anotarme";
+      btn.onclick = () => anotarse(p.id, anotados);
+    }
+    actions.appendChild(btn);
+  }
+
+  if(esCreador){
+    const btn = document.createElement("button");
+    btn.className = "btn-sm btn-sm-red";
+    btn.textContent = "🗑 Eliminar";
+    btn.onclick = () => eliminarPartido(p.id);
+    actions.appendChild(btn);
+  }
+
+  div.appendChild(actions);
+  container.appendChild(div);
+}
+
+// ── NOTIFICACIONES (localStorage por usuario) ──
+function getNotifs(){
+  if(!usuarioActual) return [];
+  return JSON.parse(localStorage.getItem("notifs_" + usuarioActual.uid) || "[]");
+}
+function saveNotifs(n){ localStorage.setItem("notifs_" + usuarioActual.uid, JSON.stringify(n)); }
+
+function agregarNotif(texto){
+  if(!usuarioActual) return;
+  const n = getNotifs();
+  n.unshift({ texto, tiempo: Date.now(), leida: false });
+  saveNotifs(n.slice(0, 30));
+  actualizarBadgeNotifs();
+}
+
+function agregarNotifPara(email, texto){
+  const key = "notifs_pending_" + email;
+  const n = JSON.parse(localStorage.getItem(key) || "[]");
+  n.unshift({ texto, tiempo: Date.now(), leida: false });
+  localStorage.setItem(key, JSON.stringify(n.slice(0, 30)));
+}
+
+function actualizarBadgeNotifs(){
+  const noLeidas = getNotifs().filter(n => !n.leida).length;
+  const dot = document.getElementById("notifDot");
+  if(dot) dot.style.display = noLeidas > 0 ? "block" : "none";
+}
+
+function limpiarBadgeNotifs(){
+  const n = getNotifs().map(x => ({...x, leida: true}));
+  saveNotifs(n);
+  actualizarBadgeNotifs();
+}
+
+function tiempoRelativo(ts){
+  const d = (Date.now() - ts) / 1000;
+  if(d < 60) return "Ahora";
+  if(d < 3600) return Math.floor(d/60) + " min";
+  if(d < 86400) return Math.floor(d/3600) + " h";
+  return Math.floor(d/86400) + " d";
+}
+
+window.mostrarNotifs = function(){
+  const container = document.getElementById("listaNotifs");
+  container.innerHTML = "";
+
+  // Traer notifs pendientes
+  if(usuarioActual){
+    const pendKey = "notifs_pending_" + usuarioActual.email;
+    const pending = JSON.parse(localStorage.getItem(pendKey) || "[]");
+    if(pending.length > 0){
+      const actual = getNotifs();
+      saveNotifs([...pending, ...actual].slice(0, 30));
+      localStorage.removeItem(pendKey);
+    }
+  }
+
+  const notifs = getNotifs();
+  if(notifs.length === 0){
+    container.innerHTML = '<div class="empty"><div class="empty-icon">🔔</div>Sin notificaciones por ahora</div>';
+    return;
+  }
+  notifs.forEach(n => {
+    const div = document.createElement("div");
+    div.className = "notif-item " + (n.leida ? "leida" : "nueva");
+    div.innerHTML = '<div class="notif-icon">🔔</div><div class="notif-body"><div class="notif-title">' + n.texto + '</div><div class="notif-time">' + tiempoRelativo(n.tiempo) + '</div></div>';
+    container.appendChild(div);
+  });
+}
+
+window.mostrarPartidos = function(){
+  escucharPartidos("lista");
+}
+
+</script>
+</body>
+</html>
